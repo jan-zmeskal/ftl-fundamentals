@@ -108,6 +108,29 @@ func TestDivide(t *testing.T) {
 	}
 }
 
+func TestSqrt(t *testing.T) {
+	var testCases = []struct {
+		a, want     float64
+		desc        string
+		errExpected bool
+	}{
+		{a: 25, want: 5, desc: "Positive number with integer sqrt", errExpected: false},
+		{a: 0, want: 0, desc: "Zero with zero sqrt", errExpected: false},
+		{a: 37, want: 6.08276253, desc: "Positive number with float sqrt", errExpected: false},
+		{a: -25, want: 0, desc: "Negative number is invalid input", errExpected: true},
+	}
+	for _, tc := range testCases {
+		got, err := calculator.Sqrt(tc.a)
+		errReceived := err != nil
+		if tc.errExpected != errReceived {
+			t.Fatalf("%q failed. Sqrt(%f): unexpected error status: %v", tc.desc, tc.a, errReceived)
+		}
+		if !tc.errExpected && !compare(tc.want, got) {
+			t.Errorf("%q failed. Sqrt(%f): want %f, got %f", tc.desc, tc.a, tc.want, got)
+		}
+	}
+}
+
 func TestAddRandom(t *testing.T) {
 	var i int
 	rand.Seed(time.Now().UnixNano())
