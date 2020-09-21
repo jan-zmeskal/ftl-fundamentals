@@ -47,7 +47,6 @@ func TestAdd(t *testing.T) {
 	}
 }
 
-// TODO: Rewrite using test cases
 func TestSubtract(t *testing.T) {
 	t.Parallel()
 	var testCases = []testCase{
@@ -66,7 +65,6 @@ func TestSubtract(t *testing.T) {
 	}
 }
 
-// TODO: Rewrite using test cases
 func TestMultiply(t *testing.T) {
 	t.Parallel()
 	var testCases = []testCase{
@@ -143,4 +141,38 @@ func TestAddRandom(t *testing.T) {
 		}
 		i++
 	}
+}
+
+func TestMultipleArgs(t *testing.T) {
+
+	var testNums = []float64{30, 5, 3, 2}
+	var got, want float64
+
+	got = calculator.Add(testNums...)
+	want = 40
+	if got != want {
+		t.Errorf("multiple args test failed. Add(%v): want %f, got %f", testNums, want, got)
+	}
+
+	got = calculator.Subtract(testNums...)
+	want = 20
+	if got != want {
+		t.Errorf("multiple args test failed. Subtract(%v): want %f, got %f", testNums, want, got)
+	}
+
+	got = calculator.Multiply(testNums...)
+	want = 900
+	if got != want {
+		t.Errorf("multiple args test failed. Multiply(%v): want %f, got %f", testNums, want, got)
+	}
+
+	got, err := calculator.Divide(testNums...)
+	if err != nil {
+		t.Errorf("multiple args test failed. Divide(%v) received error: %v", testNums, err)
+	}
+	want = 1
+	if got != want {
+		t.Errorf("multiple args test failed. Divide(%v): want %f, got %f", testNums, want, got)
+	}
+
 }
