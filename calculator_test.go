@@ -176,3 +176,28 @@ func TestMultipleArgs(t *testing.T) {
 	}
 
 }
+
+func TestProcess(t *testing.T) {
+	var testCases = []struct {
+		cmd         string
+		want        float64
+		errExpected bool
+	}{
+		{"2*2", 4, false},
+		{"1 + 1.5", 2.5, false},
+		{"18    /  6", 3, false},
+		{"100-0.1", 99.9, false},
+		{"0.0-0.5", 0.5, false},
+		{"3 / 0", 0, true},
+	}
+	for _, tc := range testCases {
+		got, err := calculator.Process(tc.cmd)
+		errReceived := err != nil
+		if tc.errExpected != errReceived {
+			t.Fatalf("Process(%v): unexpected error status: %v", tc.cmd, errReceived)
+		}
+		if !compare(tc.want, got) {
+			t.Errorf("Process(%v) failed: want %f, got %f", tc.cmd, tc.want, got)
+		}
+	}
+}

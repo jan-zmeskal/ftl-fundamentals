@@ -54,3 +54,10 @@ func Sqrt(a float64) (float64, error) {
 	}
 	return math.Sqrt(a), nil
 }
+
+// Process takes a string argument (e.g "2+2") and returns result of the operation
+// described by the string. This is limited to the numbers with a single floating point
+// digit. All whitespaces are ignored.
+func Process(cmd string) (float64, error) {
+	return 0, nil
+}
